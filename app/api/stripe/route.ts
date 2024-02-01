@@ -1,4 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs";
+
 import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
@@ -30,6 +31,8 @@ export async function GET(){
         return new NextResponse(JSON.stringify({ url: stripeSession.url }))
 
     }
+console.log("_____________________________________________________________________________________________________");
+    console.log("Setting URL",settingsUrl);
         const stripeSession = await stripe.checkout.sessions.create({
       success_url: settingsUrl,
       cancel_url: settingsUrl,

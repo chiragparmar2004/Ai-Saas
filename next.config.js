@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
+   images: {
     domains: [
       "googleusercontent.com",
 "oaidalleapiprodscus.blob.core.windows.net",

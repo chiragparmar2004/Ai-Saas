@@ -27,6 +27,7 @@ import { SelectContent } from "@radix-ui/react-select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useProModal } from "@/hooks/use-pro-modal";
+import toast from "react-hot-toast";
 const ImagePage = () => {
   const router = useRouter();
   const proModal=useProModal();
@@ -52,11 +53,11 @@ const ImagePage = () => {
   setImages(urls);
   form.reset();
 } catch (error:any) {
-   if(error?.response?.status ===403){
-    proModal.onOpen()
-}
-  console.log("Error during image generation:", error);
-
+  if (error?.response?.status === 403) {
+    proModal.onOpen();
+  } else {
+    toast.error("Something went wrong.");
+  }
   // Example: Display an error message to the user
   // setErrorModalMessage("An error occurred during image generation");
 } finally {
