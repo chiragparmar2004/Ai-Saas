@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { Empty } from "@/components/empty";
 import Loader from "@/components/loader";
 import { cn } from "@/lib/utils";
@@ -20,8 +19,9 @@ import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
 import { useProModal } from "@/hooks/use-pro-modal";
 import toast from "react-hot-toast";
-const ConversationPage = () => {
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+import { ChatCompletionRequestMessage } from "openai";
+ const ConversationPage = () => {
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
   const proModal=useProModal();
   
   const router = useRouter();
@@ -37,7 +37,7 @@ const ConversationPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
 
-      const userMessage: ChatCompletionMessageParam = {
+      const userMessage: ChatCompletionRequestMessage = {
         role: "user",
         content: values.prompt,
       };
