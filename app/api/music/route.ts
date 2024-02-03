@@ -6,9 +6,10 @@ import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_TOKEN!,
+  auth: process.env.REPLICATE_API_TOKEN
+    ? process.env.REPLICATE_API_TOKEN
+    : "defaultToken",
 });
-
 
 export async function POST(req: Request) {
   try {
@@ -25,8 +26,11 @@ export async function POST(req: Request) {
     const freeTrial = await checkApiLimit();
     const isPro = await checkSubscription();
 
-    if (!freeTrial && !isPro ) {
-      return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
+    if (!freeTrial && !isPro) {
+      return new NextResponse(
+        "Free trial has expired. Please upgrade to pro.",
+        { status: 403 }
+      );
     }
     console.log("hello music ");
 
@@ -35,11 +39,11 @@ export async function POST(req: Request) {
       {
         input: {
           prompt: prompt,
-        }
+        },
       }
     );
 
-    if(!isPro){
+    if (!isPro) {
       await incrementApiLimit;
     }
     return NextResponse.json(response);
